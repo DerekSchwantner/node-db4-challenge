@@ -11,9 +11,19 @@ function getRecipes() {
 }
 
 function getShoppingList(id) {
-  return db("ingredients");
+  return db("ingredients")
+    .where({ recipe_id: id })
+    .then(list => {
+      if (list) {
+        return list;
+      } else {
+        return null;
+      }
+    });
 }
 
 function getInstructions(id) {
-  return db("instructions");
+  return db("instructions")
+    .where({ recipe_id: id })
+    .orderBy("instructions.step_number", "asc");
 }
